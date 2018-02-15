@@ -45,9 +45,18 @@ catcols <- union(union(names(train[, !grepl("Unknown", label(train), fixed = TRU
                  names(train[, sapply(train, is.character)])),
                  c("AA4", "AA7", "AA14", "AA15", "DG8a", "DG8b", "DG8c", "DL4_96", "DL4_99", "DL11", "MT1", "IFI18", "FB13",
                    "DG9a", "DG9b", "DG9c", "G2P2_96", "G2P3_6", "G2P3_8", "G2P3_9","G2P3_11", "G2P3_13", "G2P3_96", "MT6C",
-                   "MM23", "FB14", "FB15"))
+                   "MM23", "FB14", "FB15", "MM41", ))
 intcols <- names(train[, sapply(train, is.integer) & !( names(train) %in% c(idcol, catcols, targetcol))])
 numcols <- names(train[, !names(train) %in% c(catcols, intcols, idcol, targetcol) ])
+
+# identified as potentially useful in research 
+# note some of them arent useful AA19 RI8_1
+sme_catcols <- c("DL0", "FL12", "FL13", "FL14", "FL15", "FL16", "GN1", "GN2", "GN3", "GN4", "GN5", "MM28, MM29",
+                 "FF1", "G2P1_5", "G2P1_4","G2P1_6", "MT1A", "MT2", "MT6", "MM38_14", "MMP1_1", "MMP1_2", "MMP1_3",
+                 "MMP1_4", "MMP1_5", "MMP1_6", "MMP1_7", "MMP1_8", "MMP1_9", "MMP1_10", "MMP1_11", "IFI10_1", "IFI10_20"
+                 , "FB27_1", "FB27_2", "FB27_3", "FB27_4", "FB27_5", "FB27_6", "FB27_7", "FB27_8", "FF14_14", "FF14_15"
+                 ,"FF14_15", "FF14_16", "FF13", "FF14_17", "FF14_19", "MM2_4", "MM3_4", "MM4_4", "MM38_14")
+
 
 # A crude treatment of all NAs in the dataset as a special category. This has repercussions on numeric columns
 #train[is.na(train)] <- -99
@@ -70,13 +79,13 @@ valid$is_female <- factor(valid$is_female)
 ############################### Data Exploration ################################################
 
 # Plot histograms of all variables after filtering NA
-# train %>% 
-#   select_if(is.numeric) %>% 
-#   select(-one_of(idcol)) %>% 
-#   melt() %>% 
-#   filter(!is.na(value)) %>%
-#   ggplot(aes(x = value)) + facet_wrap(~variable,scales = "free") + geom_histogram()
-# ggsave(file = "../output/plots/histograms_before_imputation.png", device = "png", width = 16, height = 8, units = "in")
+ train %>%
+   select_if(is.numeric) %>%
+   select(-one_of(idcol)) %>%
+   melt() %>%
+  filter(!is.na(value)) %>%
+  ggplot(aes(x = value)) + facet_wrap(~variable,scales = "free") + geom_histogram()
+  ggsave(file = "output/plots/histograms_before_imputation.pdf", device = "pdf", width = 16, height = 8, units = "in")
 
 
 

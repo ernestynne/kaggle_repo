@@ -22,7 +22,7 @@ library(fastcluster)
 ggplot(missing_values  , aes(x = reorder(feature,-missing_pct), y = missing_pct )) +
   geom_bar(stat="identity", fill ="red") +
   coord_flip()
-
+# ggsave(file = "output/plots/empty_columns.pdf", device = "pdf", width = 16, height = 8, units = "in")
 
 # The big question is how to treat NULLs, and this can be extremely context sensitive for each variable.
 # It would be a good idea to do a hierarchical variable clustering for missingness in data.
@@ -45,7 +45,7 @@ dummy_train <- lapply(train, function(x) ifelse(is.na(x), 1, 0) ) %>% data.frame
 # missing_comb <- data.frame(missing_pattern$tabcomb)
 # names(missing_comb)  <- names(missing_pattern$x)
 # missing_comb$percent <- missing_pattern$percent
-# write.xlsx2(missing_comb, file = "../output/missing_values_combinations.xlsx", row.names = FALSE)
+# write.xlsx2(missing_comb, file = "output/missing_values_combinations.xlsx", row.names = FALSE)
 
 
 ############################### Data Cleaning & Imputation ################################################
@@ -110,28 +110,6 @@ test <- cbind(id = test$id, vtreat::prepare(treatplan, test %>% select(-id)) )
 # # Create list of columns that need to be excluded from any modelling, based on correlation being above a threshold value
 # exclude_columns <- (melted_cormat %>% filter(Var1 != Var2, value > 0.9))[,1] %>% as.character()
 
-# ###############################  Outlier exploration ################################################
-
-# uses a multivariate model approach to identify outliers
-
-#TODO: probably dont want to fit the saturated model
-#TODO: need to ensure that we have the dataset that has dealt with the missing values
-logistic_model <- glm (isFemale ~ ., data = train, family = binomial)
-npar <- length(logistic_model$coefficients)-1
-summary(logistic_model)
-
-# check the jack knife residuals to identy the extreme obs
-res_jk <- rstudent(logistic_model)
-std_jk <- sqrt((sum(res_jk^2))/nrow(train))
-train$high_outlier <- ifelse(res_jk > 3*std_jk, 1, 0)
-
-# have a look at the hat matrix to identify high leverage pooints
-h_ii <- hat (model.matrix(logistic_model))
-train$high_leverage <- ifelse(h_ii > 2*(npar+1)/nrow(train), 1, 0)
-
-# also check cooks distance to identify influence points
-cd_i <- cooks.distance(logistic_model)
-train$high_influence <- ifelse(unname(cd_i) > 1, 1, 0)
 
 
 
