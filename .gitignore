@@ -10,7 +10,7 @@ data/*.csv
 data/*.xlsx
 
 # any output
-*.Rdata
+.Rdata
 output/*
 
 # any history that is lurking
