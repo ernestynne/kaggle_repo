@@ -9,5 +9,9 @@ scripts/config.R
 data/*.csv
 data/*.xlsx
 
+# any output
+*.Rdata
+output/*
+
 # any history that is lurking
 .Rhistory
