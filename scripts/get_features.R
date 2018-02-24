@@ -30,7 +30,7 @@ print("Extracting features...")
 
 #TODO: probably dont want to fit the saturated model
 #TODO: need to ensure that we have the dataset that has dealt with the missing values
-logistic_model <- glm (isFemale ~ ., data = train, family = binomial)
+logistic_model <- glm (is_female ~ ., data = train, family = binomial)
 npar <- length(logistic_model$coefficients)-1
 summary(logistic_model)
 
@@ -47,3 +47,17 @@ train$high_leverage <- ifelse(h_ii > 2*(npar+1)/nrow(train), 1, 0)
 cd_i <- cooks.distance(logistic_model)
 train$high_influence <- ifelse(unname(cd_i) > 1, 1, 0)
 
+# ###############################  Boruta ################################################
+
+# see if producing shadow features or shuffled copies of features highlight useful features
+
+# first cut of features with detailed trace
+boruta_features <- Boruta(is_female ~ ., data = train, doTrace = 2)
+print(boruta_features)
+
+# decide whether the tentative attributes are in or out
+boruta_features_final <- TentativeRoughFix(boruta_features)
+print(boruta_features_final)
+
+# retain summary stats
+boruta_features_df <- attStats(boruta_features_final)

@@ -45,7 +45,7 @@ catcols <- union(union(names(train[, !grepl("Unknown", label(train), fixed = TRU
                  names(train[, sapply(train, is.character)])),
                  c("AA4", "AA7", "AA14", "AA15", "DG8a", "DG8b", "DG8c", "DL4_96", "DL4_99", "DL11", "MT1", "IFI18", "FB13",
                    "DG9a", "DG9b", "DG9c", "G2P2_96", "G2P3_6", "G2P3_8", "G2P3_9","G2P3_11", "G2P3_13", "G2P3_96", "MT6C",
-                   "MM23", "FB14", "FB15", "MM41", ))
+                   "MM23", "FB14", "FB15", "MM41"))
 intcols <- names(train[, sapply(train, is.integer) & !( names(train) %in% c(idcol, catcols, targetcol))])
 numcols <- names(train[, !names(train) %in% c(catcols, intcols, idcol, targetcol) ])
 

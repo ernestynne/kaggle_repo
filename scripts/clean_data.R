@@ -8,15 +8,6 @@
 #
 # ================================================================================================ #
 
-library(VIM)
-library(mice)
-library(stringr)
-library(vtreat)
-library(FactoMineR)
-library(reshape2)
-library(unbalanced)
-library(fastcluster)
-
 
 # Plot the list of empty columns
 ggplot(missing_values  , aes(x = reorder(feature,-missing_pct), y = missing_pct )) +
