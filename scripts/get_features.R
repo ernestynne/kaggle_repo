@@ -52,7 +52,7 @@ train$high_influence <- ifelse(unname(cd_i) > 1, 1, 0)
 # see if producing shadow features or shuffled copies of features highlight useful features
 
 # first cut of features with detailed trace
-boruta_features <- Boruta(is_female ~ ., data = train, doTrace = 2)
+boruta_features <- Boruta(is_female ~ ., data = train, maxRuns = 15, doTrace = 2)
 print(boruta_features)
 
 # decide whether the tentative attributes are in or out
@@ -61,3 +61,7 @@ print(boruta_features_final)
 
 # retain summary stats
 boruta_features_df <- attStats(boruta_features_final)
+
+# find the useful features
+boruta_cols <- row.names(boruta_features_df[which(boruta_features_df$decision=="Confirmed"),])
+save(boruta_cols, file = "boruta_features.RData")
