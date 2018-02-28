@@ -46,7 +46,8 @@ library(vtreat)      # 1.0.2    dataframe
 library(FactoMineR)  # 1.39     multivariate data mining
 library(unbalanced)  # 2.0      racing for unablanced methods selection
 library(fastcluster) # 1.1.24   fast hierarchical clustering
-
+library(glmnet)      # 2.0-13   lasso and elastic net models
+library(pROC)        # 1.10.0   roc curve  
 
 # this config must define folder_path the absolute path of the repo
 #source("scripts/config.R")

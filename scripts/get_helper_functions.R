@@ -2,15 +2,17 @@
 # Description: place to store any functions needed for the analysis
 #
 # Input: 
-# TBA
+# NA
 #
 # Output: 
-# TBA
+# assignLabels = function to add labels to columns
+# submit_predictions = function to get the predictions in the correct formation for submission                             
+# woeCoderC = function to create the WOE coding for datasets
 #
 # Author: E Walsh, V Benny
 #
 # Dependencies: 
-# TBA
+# run via main script to load all the packages
 #
 # Notes:
 #

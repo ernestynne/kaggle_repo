@@ -2,21 +2,21 @@
 # Description: generate xgboost solution
 #
 # Input: 
-# TBA
+# train = model build dataset
+# valid = roc validation hold out dataset
+# test = dataset used for kaggle submission
 #
 # Output: 
-# TBA
+# final_xgb_model = parameted tuned gradient boosted model
+# predictions = predicted values using xgboost
 #
 # Author: E Walsh
 #
 # Dependencies: 
-# TBA
+# run via main script to load all the packages and data
 #
 # Notes:
-# TODO - make sure there are only numerics in train.matrix
-# TODO - ensure that the name dataset.train/valid.xinputs aligns with the upstream name
-# TODO - decide whether we want to use dart as the booster
-
+#
 # Issues:
 #
 # History (reverse order): 

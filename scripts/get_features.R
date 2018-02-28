@@ -2,15 +2,20 @@
 # Description: perform feature extraction
 #
 # Input: 
-# TBA
+# train = model build dataset
+# valid = roc validation hold out dataset
 #
 # Output: 
-# TBA
+# train$high_leverage = column identifying points with high leverage
+# train$high_influence = column identifying influential points
+# train$high_outlier = column identifying standardised jack knife residuals
+# boruta_cols = list of columns that were flagged as important via the boruta algorithm
+# 
 #
 # Author: E Walsh
 #
 # Dependencies: 
-# TBA
+# run via main script to load all the packages and data
 #
 # Notes:
 #
@@ -65,3 +70,27 @@ boruta_features_df <- attStats(boruta_features_final)
 # find the useful features
 boruta_cols <- row.names(boruta_features_df[which(boruta_features_df$decision=="Confirmed"),])
 save(boruta_cols, file = "boruta_features.RData")
+
+# extract useful columns and convert target into factors that start with a charcter to avoid errors
+# around variable names
+train_boruta <- train %>% select(is_female, boruta_cols)
+valid_boruta <- valid %>% select(is_female, boruta_cols)
+levels(train_boruta$is_female) <- make.names(levels(factor(train_boruta$is_female)))
+
+# quickly check on the fly see if the columns extracted prove to be useful
+glmnet_control_object <- trainControl(method='cv', number = 5, returnResamp = 'none', classProbs = TRUE)
+model_object <- caret::train(as.data.frame(train_boruta[,boruta_cols]), train_boruta$is_female,
+                      method = 'glmnet',
+                      trControl = glmnet_control_object,
+                      metric = "Accuracy")
+
+# confirm what the roc score is on the validation data
+# this metric is not available for glmnet so the pROC package is required
+# this will require changing the prediction levels back again...
+predict_boruta <- predict(object = model_object, valid_boruta[,boruta_cols])
+roc_boruta <- roc(valid_boruta[,"is_female"], ifelse(predict_boruta=="X0",0,1))
+# boruta columns look promising but will require more tuning
+print(roc_boruta$auc)
+
+
+                      
