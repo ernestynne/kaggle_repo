@@ -3,12 +3,14 @@ Kaggle - Predictive Analytics for Social Impact (WiDS 2018 Datathon)
 
 #### Intro
 
-This Readme file is for Datawraiths of Aotearoa team entry for the [Predictive Analytics for Social Impact](https://www.kaggle.com/c/wids2018datathon), hosted by Kaggle with the Women in Data Science Conference (WiDS)
+This Readme file is for Datawraiths of Aotearoa team entry for the [Predictive Analytics for Social Impact](https://www.kaggle.com/c/wids2018datathon), hosted by Kaggle with the Women in Data Science Conference (WiDS).
 
 The WiDS Datathon is intended to encourage women data scientists to participate in predictive analysis contests. Teams must be majority women to enter.
 
 The challenge is to use demographic and behavioural information from survey respondents in India on their use of traditional and mobile financial services to predict the gender of respondents. 
-Ideally, this data can then be used to help enable more Indian women to access financial services. 
+Ideally, this data can then be used to help enable more Indian women to access financial services.
+
+To learn more about the experience check out the [blog](https://www.linkedin.com/pulse/women-data-science-kaggle-comp-experience-ernestynne-walsh/) from one of our contributors.
 
 #### Packages
 
@@ -22,7 +24,7 @@ Executing this benchmark requires R along with the following packages:
 + library(caret)       # 6.0-78   classification and regression training
 + library(ggplot2)     # 2.2.1    nice plots
 + library(xgboost)     # 0.6.4.1  gradient boosting
-+ library(h2o)         # 3.16.0.2 deep learning    
++ library(h2o)         # 3.16.0.2 deep learning
 + library(e1071)       # 1.6-8    support vector machines
 + library(Hmisc)       # 4.1-1    labelling columns of dataset
 + library(data.table)  # 1.10.4-3 faster data extraction functions
